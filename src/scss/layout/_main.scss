@@ -1,0 +1,7 @@
+@use "config/variables" as var;
+@use "config/mixins" as mix;
+
+.main {
+  border-radius: 1rem;
+  padding: 5rem 0;
+}
