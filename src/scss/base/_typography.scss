@@ -20,7 +20,9 @@ h3 {
 }
 
 [class$="__heading"] {
-  margin: 2rem 0;
+  margin: 1rem 2rem;
+  margin-top: 0;
+  color: var.$secondary-color;
 }
 
 a {

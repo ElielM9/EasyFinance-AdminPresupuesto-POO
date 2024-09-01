@@ -35,11 +35,7 @@
 
   &__btn {
     @include mix.button(
-      linear-gradient(
-        90deg,
-        rgba(215, 134, 255, 1) 30%,
-        rgba(46, 39, 61, 1) 100%
-      ),
+      linear-gradient(90deg, var.$secondary-color 40%, var.$primary-color 100%),
       var.$white
     );
   }

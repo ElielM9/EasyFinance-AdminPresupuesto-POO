@@ -2,11 +2,9 @@
 @use "config/mixins" as mix;
 
 .budget {
-  &__grid {
-    @include mix.grid(1, 3rem);
-
-    @include mix.tablet {
-      @include mix.grid(2, 3rem);
+  &__heading {
+    &--name {
+      color: var.$white;
     }
   }
 
@@ -15,6 +13,6 @@
     grid-auto-flow: dense;
     grid-template-columns: repeat(2, 1fr);
     gap: 0.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
 }

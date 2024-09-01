@@ -14,10 +14,18 @@
     <link rel="stylesheet" href="styles/styles.css" />
   </head>
   <body>
+    <header class="header">
+      <h2 class="header__heading">
+        Easy<span class="header__heading--color">Finance</span>
+      </h2>
+    </header>
     <main class="main main__container">
-      <div class="budget budget__grid">
-        <div class="budget__content">
-          <div id="budgetCards" class="budget__cards">
+      <div class="main__grid">
+        <div class="budget">
+          <h3 class="budget__heading">
+            Hola, <span class="budget__heading--name">Nombre</span>
+          </h3>
+          <div class="budget__cards" id="budgetCards">
             <div class="budget-card">
               <p class="budget-card__text">
                 Presupuesto: <span id="budgetCardTotal">$500</span>
@@ -35,7 +43,7 @@
             </div>
           </div>
 
-          <form action="#" class="budget-form" id="budget-form">
+          <form class="budget-form" id="budgetForm" action="#">
             <div class="budget-form__field">
               <label for="expense" class="budget-form__label"
                 >Nombre del gasto</label
@@ -71,11 +79,11 @@
           </form>
         </div>
 
-        <div class="budget__content">
-          <h3 class="">Transacciones realizadas</h3>
+        <div class="expenses">
+          <h3 class="expenses__heading">Transacciones realizadas</h3>
 
-          <div id="gastos">
-            <ul class="list-group"></ul>
+          <div id="expenses">
+            <ul class=""></ul>
           </div>
         </div>
       </div>
