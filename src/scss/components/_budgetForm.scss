@@ -34,9 +34,6 @@
   }
 
   &__btn {
-    @include mix.button(
-      linear-gradient(90deg, var.$secondary-color 40%, var.$primary-color 100%),
-      var.$white
-    );
+    @include mix.button(var.$secondary-color, var.$primary-color, var.$white);
   }
 }

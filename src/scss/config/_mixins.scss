@@ -42,21 +42,26 @@
 }
 
 // Botones
-@mixin button($bgGradient, $textColor) {
+@mixin button($bgColor1, $bgColor2, $textColor) {
   margin-top: 2rem;
   border: none;
   border-radius: 1rem;
   outline: none;
   display: block;
   padding: 1rem 2rem;
-  background-image: $bgGradient;
+  background: linear-gradient(90deg, $bgColor1 40%, $bgColor2 100%);
   font-size: 1.8rem;
   font-weight: 700;
   color: $textColor;
   text-align: center;
   text-decoration: none;
 
-  @include hover(background-color, 0.3s, ease-in-out) {
+  @include hover(all, 0.3s, ease-in-out) {
+    background: linear-gradient(
+      90deg,
+      darken($bgColor1, 10%) 40%,
+      darken($bgColor2, 10%) 100%
+    );
     cursor: pointer;
   }
 }

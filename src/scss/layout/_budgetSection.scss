@@ -3,6 +3,7 @@
 
 .budget {
   &__heading {
+    color: var.$secondary-color;
     &--name {
       color: var.$white;
     }
