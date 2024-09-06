@@ -92,5 +92,15 @@ function requestBudget() {
 function budgetFormEvents() {
   // Obtener el formulario y sus eventos
   const budgetForm = document.querySelector(`#budgetForm`);
-  budgetForm.addEventListener(`submit`, handleBudgetFormSubmit);
+  budgetForm.addEventListener(`submit`, addExpense);
+}
+
+function addExpense(e) {
+  e.preventDefault();
+
+  // Obtener los valores del formulario
+  const inputExpenseName = document.querySelector(`#expenseName`).value;
+  const inputExpenseAmount = document.querySelector(`#expenseAmount`).value;
+  const selectExpenseCategory =
+    document.querySelector(`#expenseCategory`).value;
 }

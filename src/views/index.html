@@ -45,33 +45,50 @@
 
           <form class="budget-form" id="budgetForm" action="#">
             <div class="budget-form__field">
-              <label for="expense" class="budget-form__label"
+              <label for="expenseName" class="budget-form__label"
                 >Nombre del gasto</label
               >
               <input
                 type="text"
                 class="budget-form__input"
-                id="expense"
+                id="expenseName"
                 placeholder="Ingresa un gasto"
               />
             </div>
             <div class="budget-form__field">
-              <label for="amount" class="budget-form__label">Cantidad</label>
+              <label for="expenseAmount" class="budget-form__label"
+                >Cantidad</label
+              >
               <input
                 class="budget-form__input"
                 type="number"
                 min="1"
-                id="amount"
+                id="expenseAmount"
                 placeholder="Ingresa la cantidad"
               />
             </div>
             <div class="budget-form__field">
-              <label for="category" class="budget-form__label">Categoría</label>
+              <label for="expenseCategory" class="budget-form__label"
+                >Categoría</label
+              >
               <select
-                id="category"
+                id="expenseCategory"
                 class="budget-form__input budget-form__select"
               >
                 <option value="">Seleccionar una categoría</option>
+                <option value="1">Vivienda</option>
+                <option value="2">Comida</option>
+                <option value="3">Impuestos y donaciones</option>
+                <option value="4">Transporte</option>
+                <option value="5">Seguros</option>
+                <option value="6">Ahorros / Inversiones</option>
+                <option value="7">Serviciosr</option>
+                <option value="8">Salud y bienestar</option>
+                <option value="9">Vestimenta</option>
+                <option value="10">Recreación</option>
+                <option value="11">Personal</option>
+                <option value="12">Deudas</option>
+                <option value="13">Educación</option>
               </select>
             </div>
 
