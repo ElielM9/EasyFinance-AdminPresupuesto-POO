@@ -58,12 +58,19 @@ const userInterface = new UserInterface();
 
 /* Funciones */
 function requestName() {
-  const userName = prompt(`¿Cuál es tu nombre?`);
-  let voidValue = ``;
+  let userName;
 
-  if (userName === null || userName === voidValue) {
-    window.location.reload();
-  }
+  // Solicitar el nombre del usuario hasta que se ingrese un valor válido
+  do {
+    userName = prompt(`¿Cuál es tu nombre?`);
+
+    // Validar el nombre
+    if (!userName) {
+      alert(`Por favor, introduce un nombre válido.`);
+    }
+
+    
+  } while (!userName);
 
   // Llamar al método para insertar el nombre en la UI
   userInterface.insertName(userName);
