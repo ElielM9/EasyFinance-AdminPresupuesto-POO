@@ -6,6 +6,7 @@ let budget;
 document.addEventListener(`DOMContentLoaded`, startApp);
 
 function startApp() {
+  requestName();
   requestBudget();
   budgetFormEvents();
 }
@@ -20,6 +21,15 @@ class Budget {
 }
 
 class UserInterface {
+  insertName(userName) {
+    const budgetUserName = document.querySelector(
+      `.budget__heading--user-name`
+    );
+
+    // Insertar el nombre del usuario en el HTML
+    budgetUserName.textContent = `${userName}!`;
+  }
+
   insertBudget(quantity) {
     const { budgetTotal, budgetAvailable } = quantity;
 
@@ -47,6 +57,18 @@ class UserInterface {
 const userInterface = new UserInterface();
 
 /* Funciones */
+function requestName() {
+  const userName = prompt(`¿Cuál es tu nombre?`);
+  let voidValue = ``;
+
+  if (userName === null || userName === voidValue) {
+    window.location.reload();
+  }
+
+  // Llamar al método para insertar el nombre en la UI
+  userInterface.insertName(userName);
+}
+
 function requestBudget() {
   const userBudget = Number(prompt(`¿Cuál es tu presupuesto?`));
   const voidValue = ``;
