@@ -18,11 +18,10 @@
   }
 
   &__price {
+    margin: 0;
     font-size: 2rem;
     font-weight: 700;
     color: var.$white;
-    margin-top: 0.5rem;
-    margin-bottom: 0;
   }
 
   &__btn {
@@ -34,6 +33,10 @@
     font-size: 2.5rem;
     margin: 0;
     background-color: transparent;
-    cursor: pointer;    
+
+    @include mix.hover(color, 0.3s, ease-in-out) {
+      color: #db1212;
+      cursor: pointer;
+    }
   }
 }
