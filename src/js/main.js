@@ -51,6 +51,31 @@ class UserInterface {
       `#budgetCardAvailable`
     ).textContent = `${formattedAvailable}`;
   }
+
+  printAlerts(message, typeAlert) {
+    // Crear el div de la alerta
+    const alertMessage = document.createElement(`p`);
+    alertMessage.classList.add(`alert`);
+
+    // Agregar el mensaje y el tipo de alerta al p de la alerta
+    if (typeAlert === `error`) {
+      alertMessage.classList.add(`alert--error`);
+    } else {
+      alertMessage.classList.add(`alert--success`);
+    }
+
+    // Agregar al div el mensaje
+    alertMessage.textContent = message;
+
+    // Insertar la alerta al HTML
+    const budgetForm = document.querySelector(`#budgetForm`);
+    budgetForm.appendChild(alertMessage);
+
+    // Eliminar la alerta después de 3 segundos
+    setTimeout(() => {
+      alertMessage.remove();
+    }, 3000);
+  }
 }
 
 // Instanciar la UI
@@ -68,8 +93,6 @@ function requestName() {
     if (!userName) {
       alert(`Por favor, introduce un nombre válido.`);
     }
-
-    
   } while (!userName);
 
   // Llamar al método para insertar el nombre en la UI
@@ -106,8 +129,25 @@ function addExpense(e) {
   e.preventDefault();
 
   // Obtener los valores del formulario
-  const inputExpenseName = document.querySelector(`#expenseName`).value;
-  const inputExpenseAmount = document.querySelector(`#expenseAmount`).value;
-  const selectExpenseCategory =
-    document.querySelector(`#expenseCategory`).value;
+  const inputName = document.querySelector(`#budgetFormName`).value;
+  const inputAmount = document.querySelector(`#budgetFormAmount`).value;
+  const selectedCategory = document.querySelector(`#budgetFormCategory`).value;
+  let voidValue = ``;
+
+  // Validar que ninguno de los campos esté vacío
+  if (
+    inputName === voidValue ||
+    inputAmount === voidValue ||
+    selectedCategory === voidValue
+  ) {
+    userInterface.printAlerts(`Todos los campos son obligatorios`, `error`);
+
+    return;
+  } else if (inputAmount <= 0 || isNaN(inputAmount)) {
+    userInterface.printAlerts(`Cantidad no valida`, `error`);
+
+    return;
+  }
+
+  userInterface.printAlerts(`Cargando...`, `success`);
 }
