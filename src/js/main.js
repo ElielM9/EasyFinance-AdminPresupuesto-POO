@@ -22,7 +22,15 @@ class Budget {
 
   newExpenses(expense) {
     this.expenses = [...this.expenses, expense];
-    
+    this.calculateSpent();
+  }
+
+  calculateSpent() {
+    this.budgetSpent = this.expenses.reduce(
+      (total, expense) => total + expense.inputAmount,
+      0
+    );
+    this.budgetAvailable = this.budgetTotal - this.budgetSpent;
   }
 }
 
@@ -136,6 +144,25 @@ class UserInterface {
       expensesList.removeChild(expensesList.firstChild);
     }
   }
+
+  updateBudget(available, spent){
+    let formattedAvailable = available.toLocaleString("es-MX", {
+      style: "currency",
+      currency: "MXN",
+    });
+    let formattedSpent = spent.toLocaleString("es-MX", {
+      style: "currency",
+      currency: "MXN",
+    });
+
+    // Actualizar el disponible y el gastado en el HTML
+    document.querySelector(
+      `#budgetCardAvailable`
+    ).textContent = `${formattedAvailable}`;
+    document.querySelector(
+      `#budgetCardSpent`
+    ).textContent = `${formattedSpent}`;
+  }
 }
 
 // Instanciar la UI
@@ -219,8 +246,11 @@ function addExpense(e) {
   userInterface.printAlerts(`Se agregó correctamente`, `success`);
 
   // Imprimir el gasto en el HTML
-  const { expenses } = budget;
+  const { expenses, budgetAvailable, budgetSpent } = budget;
   userInterface.addExpenseList(expenses);
+
+  // Actualizar el presupuesto en la UI
+  userInterface.updateBudget(budgetAvailable, budgetSpent);
 
   // Limpiar los campos del formulario
   const budgetForm = document.querySelector(`#budgetForm`);
