@@ -21,8 +21,19 @@ class Budget {
   }
 
   newExpenses(expense) {
+    // Validar que el monto introducido no sea mayor al presupuesto disponible
+    if (expense.inputAmount > this.budgetAvailable) {
+      userInterface.printAlerts(`No tienes fondos suficientes`, `error`);
+
+      return;
+    }
+
+    // Añadir el gasto a la lista de gastos
     this.expenses = [...this.expenses, expense];
     this.calculateSpent();
+
+    // Imprimir una alerta de exito
+    userInterface.printAlerts(`Se agregó correctamente`, `success`);
   }
 
   calculateSpent() {
@@ -113,13 +124,13 @@ class UserInterface {
       });
 
       // Crear el Li
-      const newExpense = document.createElement(`li`);
-      newExpense.className = `expense-item`;
-      newExpense.dataset.id = id;
-      newExpense.dataset.category = selectedCategory;
+      const expenseItem = document.createElement(`li`);
+      expenseItem.className = `expense-item`;
+      expenseItem.dataset.id = id;
+      expenseItem.dataset.category = selectedCategory;
 
       // Agregar el HTML
-      newExpense.innerHTML = `
+      expenseItem.innerHTML = `
         <div class="expense-item__texts">
           <p class="expense-item__description">${inputName}</p>
           <p class="expense-item__price">${formattedAmount}</p>
@@ -132,10 +143,10 @@ class UserInterface {
       deleteBtn.textContent = `X`;
 
       // Añadir el botón al Li
-      newExpense.appendChild(deleteBtn);
+      expenseItem.appendChild(deleteBtn);
 
       // Añadir el Li al Ul
-      expensesList.appendChild(newExpense);
+      expensesList.appendChild(expenseItem);
     });
   }
 
@@ -145,7 +156,7 @@ class UserInterface {
     }
   }
 
-  updateBudget(available, spent){
+  updateAvailableBudget(available, spent) {
     let formattedAvailable = available.toLocaleString("es-MX", {
       style: "currency",
       currency: "MXN",
@@ -162,6 +173,26 @@ class UserInterface {
     document.querySelector(
       `#budgetCardSpent`
     ).textContent = `${formattedSpent}`;
+  }
+
+  checkBudget(budgetObj) {
+    const { budgetTotal, budgetAvailable } = budgetObj;
+
+    /*   if (budgetTotal / 4 > budgetAvailable) {
+      console.log(`Gastaste el 75%`);
+    } else if (budgetTotal / 2 > budgetAvailable) {
+      console.log(`Gastaste el 50%`);
+    } */
+
+    const budgetFormBtn = document.querySelector(`.budget-form__btn`);
+
+    // Desactivar el botón de agregar gasto si el presupuesto está agotado
+    if (budgetAvailable <= 0) {
+      userInterface.printAlerts(`El presupuesto se ha agotado`, `error`);
+      budgetFormBtn.disabled = true;
+    } else {
+      budgetFormBtn.disabled = false;
+    }
   }
 }
 
@@ -242,15 +273,17 @@ function addExpense(e) {
   // Añadir el gasto a la lista y al presupuesto
   budget.newExpenses(expense);
 
-  // Imprimir una alerta de exito
-  userInterface.printAlerts(`Se agregó correctamente`, `success`);
+  // Obtener los valores actuales del presupuesto y gasto
+  const { expenses, budgetAvailable, budgetSpent } = budget;
 
   // Imprimir el gasto en el HTML
-  const { expenses, budgetAvailable, budgetSpent } = budget;
   userInterface.addExpenseList(expenses);
 
   // Actualizar el presupuesto en la UI
-  userInterface.updateBudget(budgetAvailable, budgetSpent);
+  userInterface.updateAvailableBudget(budgetAvailable, budgetSpent);
+
+  // Llamar al método para comprobar si se ha alcanzado el presupuesto
+  userInterface.checkBudget(budget);
 
   // Limpiar los campos del formulario
   const budgetForm = document.querySelector(`#budgetForm`);
