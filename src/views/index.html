@@ -26,17 +26,17 @@
             Hola, <span class="budget__heading--user-name"></span>
           </h3>
           <div class="budget__cards" id="budgetCards">
-            <div class="budget-card">
+            <div class="budget-card budget-card--total">
               <p class="budget-card__text">
                 Presupuesto: <span id="budgetCardTotal"></span>
               </p>
             </div>
-            <div class="budget-card">
+            <div class="budget-card budget-card--available">
               <p class="budget-card__text">
                 Disponible: <span id="budgetCardAvailable"></span>
               </p>
             </div>
-            <div class="budget-card">
+            <div class="budget-card budget-card--spent">
               <p class="budget-card__text">
                 Gastado: <span id="budgetCardSpent"></span>
               </p>
@@ -100,9 +100,7 @@
           <h3 class="expenses__heading">Transacciones realizadas</h3>
 
           <div id="expenses">
-            <ul class="expenses__list">
-           
-            </ul>
+            <ul class="expenses__list"></ul>
           </div>
         </div>
       </div>

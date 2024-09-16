@@ -43,6 +43,19 @@ class Budget {
     );
     this.budgetAvailable = this.budgetTotal - this.budgetSpent;
   }
+
+  deleteExpense(expenseId) {
+    // Filtrar los gastos que no tienen el id de expensesId
+    const filteredExpenses = this.expenses.filter(
+      (expense) => expense.id !== expenseId
+    );
+
+    // Actualizar el array de gastos
+    this.expenses = filteredExpenses;
+
+    // Recalcular el presupuesto disponible y gastado
+    this.calculateSpent();
+  }
 }
 
 class UserInterface {
@@ -109,7 +122,7 @@ class UserInterface {
     }, 3000);
   }
 
-  addExpenseList(expenses) {
+  showExpenseList(expenses) {
     // Limpiar la lista de gastos
     this.cleanHtml();
 
@@ -141,6 +154,9 @@ class UserInterface {
       const deleteBtn = document.createElement(`button`);
       deleteBtn.classList.add(`expense-item__btn`);
       deleteBtn.textContent = `X`;
+      deleteBtn.addEventListener(`click`, () => {
+        deleteExpense(id);
+      });
 
       // Añadir el botón al Li
       expenseItem.appendChild(deleteBtn);
@@ -277,7 +293,7 @@ function addExpense(e) {
   const { expenses, budgetAvailable, budgetSpent } = budget;
 
   // Imprimir el gasto en el HTML
-  userInterface.addExpenseList(expenses);
+  userInterface.showExpenseList(expenses);
 
   // Actualizar el presupuesto en la UI
   userInterface.updateAvailableBudget(budgetAvailable, budgetSpent);
@@ -288,4 +304,21 @@ function addExpense(e) {
   // Limpiar los campos del formulario
   const budgetForm = document.querySelector(`#budgetForm`);
   budgetForm.reset();
+}
+
+function deleteExpense(id) {
+  // Eliminar el gasto del objeto
+  budget.deleteExpense(id);
+
+  // Obtener los valores actuales del presupuesto y gasto
+  const { expenses, budgetAvailable, budgetSpent } = budget;
+
+  // Eliminar el gasto del HTML
+  userInterface.showExpenseList(expenses);
+
+  // Actualizar el presupuesto en la UI
+  userInterface.updateAvailableBudget(budgetAvailable, budgetSpent);
+
+  // Llamar al método para comprobar si se ha alcanzado el presupuesto
+  userInterface.checkBudget(budget);
 }
