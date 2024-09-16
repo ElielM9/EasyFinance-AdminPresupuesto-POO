@@ -1,5 +1,5 @@
 /* Variables y selectores */
-const expensesList = document.querySelector(`#expenses ul`);
+const expensesList = document.querySelector(`#expensesList`);
 let budget;
 
 /* Eventos */
@@ -98,6 +98,16 @@ class UserInterface {
   }
 
   printAlerts(message, typeAlert) {
+    // Limpiar las alertas anteriores para evitar duplicados.
+    let existingAlert = document.querySelector(`.alert--${typeAlert}`);
+
+    // Si hay una alerta del mismo tipo, actualizar el mensaje y no agregar uno nuevo
+    if (existingAlert) {
+      existingAlert.textContent = message;
+
+      return;
+    }
+
     // Crear el div de la alerta
     const alertMessage = document.createElement(`p`);
     alertMessage.classList.add(`alert`);
@@ -119,7 +129,7 @@ class UserInterface {
     // Eliminar la alerta después de 3 segundos
     setTimeout(() => {
       alertMessage.remove();
-    }, 3000);
+    }, 2000);
   }
 
   showExpenseList(expenses) {
