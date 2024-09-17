@@ -6,8 +6,7 @@ let budget;
 document.addEventListener(`DOMContentLoaded`, startApp);
 
 function startApp() {
-  requestName();
-  requestBudget();
+  loadLocalStorage();
   budgetFormEvents();
 }
 
@@ -222,14 +221,33 @@ class UserInterface {
   }
 }
 
-// Instanciar la UI
+/* Instancias */
 const userInterface = new UserInterface();
 
 /* Funciones */
 
-function requestName() {
-  let userName;
+function loadLocalStorage() {
+  let userName = JSON.parse(localStorage.getItem(`username`));
+  budget = JSON.parse(localStorage.getItem(`budget`));
 
+  // Si userName no existe, pide el nombre de usuario
+  if (!userName) {
+    requestName(userName);
+  } else {
+    // Cargar el nombre de usuario en la UI
+    userInterface.insertName(userName);
+  }
+
+  // Si no existe un presupuesto, pide un presupuesto
+  if (!budget) {
+    requestBudget();
+  } else {
+    // Cargar el presupuesto en la interfaz
+    userInterface.insertBudget(budget);
+  }
+}
+
+function requestName(userName) {
   // Solicitar el nombre del usuario hasta que se ingrese un valor válido
   do {
     userName = prompt(`¿Cuál es tu nombre?`);
@@ -242,6 +260,9 @@ function requestName() {
 
   // Llamar al método para insertar el nombre en la UI
   userInterface.insertName(userName);
+
+  // Guardar el nombre en el LocalStorage
+  saveToLocalStorage(`username`, userName);
 }
 
 function requestBudget() {
@@ -262,6 +283,9 @@ function requestBudget() {
 
   // Llamar al método para insertar el presupuesto en la UI
   userInterface.insertBudget(budget);
+
+  // Guardar el objeto de presupuesto en el localStorage
+  saveToLocalStorage(`budget`, budget);
 }
 
 function budgetFormEvents() {
@@ -332,4 +356,9 @@ function deleteExpense(id) {
 
   // Llamar al método para comprobar si se ha alcanzado el presupuesto
   userInterface.checkBudget(budget);
+}
+
+function saveToLocalStorage(key, value) {
+  // Guardar datos en el LocalStorage
+  localStorage.setItem(`${key}`, JSON.stringify(value));
 }
