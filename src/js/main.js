@@ -1,6 +1,5 @@
 /* Variables y selectores */
 const expensesList = document.querySelector(`#expensesList`);
-let budget;
 
 /* Eventos */
 document.addEventListener(`DOMContentLoaded`, startApp);
@@ -222,6 +221,7 @@ class UserInterface {
 }
 
 /* Instancias */
+let budget;
 const userInterface = new UserInterface();
 
 /* Funciones */
@@ -242,6 +242,9 @@ function loadLocalStorage() {
   if (!budget) {
     requestBudget();
   } else {
+    // Instanciar la clase Budget
+    budget = new Budget(budget.budgetTotal);
+
     // Cargar el presupuesto en la interfaz
     userInterface.insertBudget(budget);
   }
@@ -339,6 +342,9 @@ function addExpense(e) {
   // Limpiar los campos del formulario
   const budgetForm = document.querySelector(`#budgetForm`);
   budgetForm.reset();
+
+  // Guarda el objeto budget actualizado en el localStorage
+  saveToLocalStorage(`budget`, budget);
 }
 
 function deleteExpense(id) {
@@ -356,9 +362,12 @@ function deleteExpense(id) {
 
   // Llamar al método para comprobar si se ha alcanzado el presupuesto
   userInterface.checkBudget(budget);
+
+  // Guarda el objeto budget actualizado en el localStorage
+  saveToLocalStorage(`budget`, budget);
 }
 
 function saveToLocalStorage(key, value) {
   // Guardar datos en el LocalStorage
-  localStorage.setItem(`${key}`, JSON.stringify(value));
+  localStorage.setItem(key, JSON.stringify(value));
 }
