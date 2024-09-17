@@ -226,6 +226,7 @@ class UserInterface {
 const userInterface = new UserInterface();
 
 /* Funciones */
+
 function requestName() {
   let userName;
 
