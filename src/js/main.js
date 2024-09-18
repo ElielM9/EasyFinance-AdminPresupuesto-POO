@@ -230,24 +230,43 @@ function loadLocalStorage() {
   let userName = JSON.parse(localStorage.getItem(`username`));
   budget = JSON.parse(localStorage.getItem(`budget`));
 
-  // Si userName no existe, pide el nombre de usuario
-  if (!userName) {
-    requestName(userName);
-  } else {
-    // Cargar el nombre de usuario en la UI
+  // Si existe el nombre de usuario, imprime los datos en la UI
+  if (userName) {
     userInterface.insertName(userName);
-  }
-
-  // Si no existe un presupuesto, pide un presupuesto
-  if (!budget) {
-    requestBudget();
   } else {
-    // Instanciar la clase Budget
-    budget = new Budget(budget.budgetTotal);
-
-    // Cargar el presupuesto en la interfaz
-    userInterface.insertBudget(budget);
+    // Pedir el nombre del usuario
+    requestName(userName);
   }
+
+  // Si existe el presupuesto, cargar los gastos en la UI
+  if (budget) {
+    const { budgetTotal, budgetAvailable, budgetSpent, expenses } = budget;
+
+    console.log(budget);
+    // Instanciar el objeto de presupuesto
+    budget = new Budget(budgetTotal);
+    console.log(budget);
+
+    // Llamar al método para insertar el presupuesto en la UI
+    userInterface.insertBudget(budget);
+
+
+    loadExpensesToLocalStorage(budgetAvailable, budgetSpent, expenses);
+  } else {
+    // Pedir el presupuesto al usuario
+    requestBudget();
+  }
+}
+
+function loadExpensesToLocalStorage(budgetAvailable, budgetSpent, expenses) {
+  // Llamar al método para insertar los gastos en la UI
+  userInterface.showExpenseList(expenses);
+
+  // Llamar al método para actualizar el presupuesto disponible y gastado en la UI
+  userInterface.updateAvailableBudget(budgetAvailable, budgetSpent);
+
+  // Llamar al método para verificar el presupuesto en la UI
+  userInterface.checkBudget(budget);
 }
 
 function requestName(userName) {
