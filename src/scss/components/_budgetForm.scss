@@ -35,5 +35,9 @@
 
   &__btn {
     @include mix.button(var.$secondary-color, var.$primary-color, var.$white);
+
+    &--reset {
+      @include mix.button(var.$primary-color, var.$secondary-color, var.$white);
+    }
   }
 }

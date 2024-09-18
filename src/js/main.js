@@ -316,8 +316,15 @@ function requestBudget() {
 function budgetFormEvents() {
   // Obtener el formulario y sus eventos
   const budgetForm = document.querySelector(`#budgetForm`);
+  const budgetFormBtnReset = document.querySelector(`.budget-form__btn--reset`);
 
   budgetForm.addEventListener(`submit`, addExpense);
+  budgetFormBtnReset.addEventListener(`click`, (e) => {
+    e.preventDefault();
+
+    localStorage.clear();
+    window.location.reload();
+  });
 }
 
 function addExpense(e) {
