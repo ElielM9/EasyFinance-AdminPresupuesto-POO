@@ -228,7 +228,7 @@ const userInterface = new UserInterface();
 
 function loadLocalStorage() {
   let userName = JSON.parse(localStorage.getItem(`username`));
-  budget = JSON.parse(localStorage.getItem(`budget`));
+  let budgetData = JSON.parse(localStorage.getItem(`budget`));
 
   // Si existe el nombre de usuario, imprime los datos en la UI
   if (userName) {
@@ -238,27 +238,30 @@ function loadLocalStorage() {
     requestName(userName);
   }
 
-  // Si existe el presupuesto, cargar los gastos en la UI
-  if (budget) {
-    const { budgetTotal, budgetAvailable, budgetSpent, expenses } = budget;
+  // Si existen datos en el LocalStorage:
+  if (budgetData) {
+    // Recuperar los datos del presupuesto desde el localStorage
+    const { budgetTotal, budgetAvailable, budgetSpent, expenses } = budgetData;
 
-    console.log(budget);
     // Instanciar el objeto de presupuesto
     budget = new Budget(budgetTotal);
-    console.log(budget);
+    budget.budgetAvailable = budgetAvailable;
+    budget.budgetSpent = budgetSpent;
+    budget.expenses = expenses;
 
     // Llamar al método para insertar el presupuesto en la UI
     userInterface.insertBudget(budget);
 
-
-    loadExpensesToLocalStorage(budgetAvailable, budgetSpent, expenses);
+    loadExpensesToLocalStorage();
   } else {
     // Pedir el presupuesto al usuario
     requestBudget();
   }
 }
 
-function loadExpensesToLocalStorage(budgetAvailable, budgetSpent, expenses) {
+function loadExpensesToLocalStorage() {
+  const { budgetAvailable, budgetSpent, expenses } = budget;
+
   // Llamar al método para insertar los gastos en la UI
   userInterface.showExpenseList(expenses);
 
@@ -313,6 +316,7 @@ function requestBudget() {
 function budgetFormEvents() {
   // Obtener el formulario y sus eventos
   const budgetForm = document.querySelector(`#budgetForm`);
+
   budgetForm.addEventListener(`submit`, addExpense);
 }
 
@@ -334,7 +338,9 @@ function addExpense(e) {
     userInterface.printAlerts(`Todos los campos son obligatorios`, `error`);
 
     return;
-  } else if (inputAmount <= 0 || isNaN(inputAmount)) {
+  }
+
+  if (inputAmount <= 0 || isNaN(inputAmount)) {
     userInterface.printAlerts(`Cantidad no valida`, `error`);
 
     return;
