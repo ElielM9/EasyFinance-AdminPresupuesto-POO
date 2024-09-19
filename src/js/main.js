@@ -251,25 +251,29 @@ function loadLocalStorage() {
 
     // Llamar al método para insertar el presupuesto en la UI
     userInterface.insertBudget(budget);
-
-    loadExpensesToLocalStorage();
   } else {
     // Pedir el presupuesto al usuario
     requestBudget();
   }
+
+  // Cargar los gastos al LocalStorage
+  loadExpensesToLocalStorage();
 }
 
 function loadExpensesToLocalStorage() {
   const { budgetAvailable, budgetSpent, expenses } = budget;
 
-  // Llamar al método para insertar los gastos en la UI
-  userInterface.showExpenseList(expenses);
+  // Si existen gastos en el LocalStorage:
+  if (expenses.length > 0) {
+    // Recuperar los gastos del LocalStorage
+    userInterface.showExpenseList(expenses);
 
-  // Llamar al método para actualizar el presupuesto disponible y gastado en la UI
-  userInterface.updateAvailableBudget(budgetAvailable, budgetSpent);
+    // Llamar al método para recalcular el presupuesto disponible y gastado en la UI
+    userInterface.updateAvailableBudget(budgetAvailable, budgetSpent);
 
-  // Llamar al método para verificar el presupuesto en la UI
-  userInterface.checkBudget(budget);
+    // Llamar al método para comprobar el presupuesto en la UI
+    userInterface.checkBudget(budget);
+  }
 }
 
 function requestName(userName) {
